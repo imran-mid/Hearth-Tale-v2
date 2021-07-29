@@ -1,0 +1,78 @@
+{
+  "story": [
+    {
+      "title": "Yoshi's birthday bash",
+      "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      "genre": "sci-fi",
+      "id": 1
+    },
+    {
+      "title": "Complete my ninja training",
+      "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.",
+      "genre": "fantasy",
+      "id": 2
+    },
+    {
+      "title": "Order a pizza!",
+      "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      "genre": "slice of life",
+      "id": 3
+    },
+    {
+      "title": "hello",
+      "content": "everybody are you",
+      "genre": "thriller",
+      "id": 4
+    },
+    {
+      "title": "s",
+      "content": "ss",
+      "genre": "thriller",
+      "id": 5
+    },
+    {
+      "title": "h",
+      "content": "hoo",
+      "genre": "thriller",
+      "id": 6
+    },
+    {
+      "title": "hi",
+      "content": "ho",
+      "genre": "thriller",
+      "id": 7
+    }
+  ],
+  "sequels": [
+    {
+      "id": 1,
+      "storyId": 3,
+      "content": "This is a sequel. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "author": "Mr Smith"
+    },
+    {
+      "id": 2,
+      "storyId": 3,
+      "content": "This is a sequel. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "author": "Jon Doe"
+    },
+    {
+      "id": 3,
+      "storyId": 2,
+      "content": "This is a sequel. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "author": "Peter Griffin"
+    },
+    {
+      "storyId": 1,
+      "content": "let's try this again",
+      "author": "Maggie Smith",
+      "id": 5
+    },
+    {
+      "storyId": 3,
+      "content": "Pizza! I love pizza",
+      "author": "Maggie Smith",
+      "id": 6
+    }
+  ]
+}
