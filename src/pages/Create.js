@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { makeStyles, Button, Container, Typography, Radio, Paper, useTheme, Grid } from '@material-ui/core'
+import { makeStyles, Button, Container, Typography, Radio, Paper, useTheme, Grid, Box } from '@material-ui/core'
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded'
 import { TextField } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import firebase from 'firebase/app';
 import "firebase/auth";
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'block'
   },
   paper: {
-    marginTop: 2,
+    paddingTop: 2,
     backgroundColor: theme.palette.primary.dark,
     height: '5vh',
     paddingLeft: '10px',
@@ -53,18 +54,21 @@ export default function Create() {
   const [titleError, setTitleError] = useState(false)
   const [contentError, setContentError] = useState(false)
   const [genre, setGenre] = useState('')
-  const [tag, setTag] = useState('new')
+  const [tag, setTag] = useState("new, just-in")
   const [genreError, setGenreError] = useState(false)
   const [user] = useAuthState(auth);
+  const [submit, setSubmit] = useState(false);
 
   const author = user ? (user.displayName ? user.displayName : "User") : "User";
 
   const handleSubmit = async (e) => {
+    let waitAfterSumbit = 800;
     e.preventDefault()
 
     setTitleError(false)
     setContentError(false)
     setGenreError(false)
+    setSubmit(true);
 
     /**
      * If there is a story Id, then we are adding a sequel. 
@@ -72,13 +76,6 @@ export default function Create() {
     if (location.state != null) {
       const storyId = location.state.storyId
       const dataRef = firestoreDb.collection("sequels");
-      // await storiesRef.add({
-      //   title: "Place holder",
-      //   body: formValue,
-      //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      //   uid,
-      //   photoURL,
-      // });
 
       if (content == '') {
         setContentError(true)
@@ -94,9 +91,9 @@ export default function Create() {
           author: author,
           storyId: storyId ? storyId : Math.floor(Math.random() * 5000),
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        }).then(() => {
+          setTimeout(() => history.goBack(), waitAfterSumbit);
         });
-        console.log("submitted");
-
       }
     } else {
 
@@ -121,18 +118,32 @@ export default function Create() {
           title: title,
           author: author,
           genre: genre,
-          tags: tag ? tag : ["new", "hot-read"],
+          tags: tag ? tag.split(",") : ["new", "hot-read"],
           content: content,
           photoUrl: url,
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        }).then(() => {
+          setSubmit(true);
+          setTimeout(() => history.push('/'), waitAfterSumbit);
         });
       }
     }
-    <Alert severity="success">Submitted!</Alert>
+  }
+
+  /** Handle Close event of snackbar close button*/
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
   }
 
   return (
-    <div>
+    <Box>
+      <Snackbar open={submit} autoHideDuration={800} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Submitted!
+        </Alert>
+      </Snackbar>
       <Paper className={classes.paper}>
         <Typography
           variant="h6"
@@ -174,7 +185,8 @@ export default function Create() {
                 className={classes.field}
                 label="Tags"
                 size="small"
-                defaultValue={tag}
+                // defaultValue=
+                placeholder={tag}
                 margin="dense"
                 variant="outlined"
               />
@@ -201,6 +213,6 @@ export default function Create() {
           endIcon={<KeyboardArrowRightRoundedIcon />}
         >Submit</Button>
       </form>
-    </div>
+    </Box>
   )
 }
