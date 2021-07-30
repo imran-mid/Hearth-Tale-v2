@@ -27,19 +27,27 @@ const useFetchData = (url, storyId) => {
         const fetchData = async () => {
             try {
                 if (!firebase) return;
-                const dataRef = firestoreDb.collection(url).where("storyId", "==", storyId).orderBy('createdAt', 'desc').limit(10);
+                let dataRef = null;
+                if (url == "sequels") {
+                    dataRef = firestoreDb.collection(url).where("storyId", "==", storyId).orderBy('createdAt', 'desc').limit(10);
+                } else if (url == "stories") {
+                    dataRef = firestoreDb.collection("stories").orderBy('createdAt', 'desc').limit(20);
+                }
+                else {
+                    throw Error("Unknown URL supplied to db store")
+                }
 
-                const docs = dataRef.get().then(docs => {
+                dataRef.get().then(docs => {
                     setIsLoading(false);
                     setError(null);
 
-                    let allStories = [];
+                    let allData = [];
                     docs.forEach((doc) => {
                         let docData = doc.data();
                         let fullData = { id: doc.id, data: docData };
-                        allStories.push(fullData);
+                        allData.push(fullData);
                     });
-                    setData(allStories);
+                    setData(allData);
                 });
             } catch (error) {
                 if (error.name === 'AbortError') {
