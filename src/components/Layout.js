@@ -42,11 +42,11 @@ export default function Layout({ children }) {
                     position="sticky"
                     color="secondary">
                     <BottomNavigationAction label={<Typography variant="caption" color='textSecondary' display="block">View Story</Typography>} value="view" icon={<BookRoundedIcon />} component={Link}
-                        to="/story" />
+                        to="/" />
                     <BottomNavigationAction label={<Typography variant="caption" color='textSecondary' display="block">Read</Typography>} value="read" icon={<WhatshotRoundedIcon />} component={Link}
                         to="/sequels" />
                     <BottomNavigationAction label={<Typography variant="caption" color='textSecondary' display="block">Write Story </Typography>} value="write" icon={<CreateRoundedIcon />} component={Link}
-                        to="/" />
+                        to="/create" />
                     <BottomNavigationAction label={<Typography variant="caption" color='textSecondary' display="block">Ideas</Typography>} value="ideas" icon={<WbIncandescentRoundedIcon />} />
                 </BottomNavigation>
             </Toolbar>

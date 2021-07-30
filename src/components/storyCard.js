@@ -28,10 +28,12 @@ const useStyles = makeStyles((theme) => ({
 export default function StoryCard({ story }) {
     const classes = useStyles();
     const history = useHistory();
+    // const history = sessionStorage();
 
+    var storyId = story.id;
+    story = story.data;
     const handleClick = (e) => {
-        console.log("Clicked me")
-        let url = `/sequels/${story.id}`;
+        let url = `/sequels/${storyId}`;
         //history.push(`/sequels/${story.id}`, [story]);
         history.push({
             pathname: url,
@@ -61,7 +63,7 @@ export default function StoryCard({ story }) {
                 component="img"
                 alt="Contemplative Reptile"
                 height="160"
-                image="https://source.unsplash.com/random"
+                image={story.photoUrl ? story.photoUrl : "https://source.unsplash.com/random/"}
                 title="Random Photo"
             />
             <CardContent>

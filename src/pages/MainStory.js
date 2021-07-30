@@ -4,9 +4,11 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import StoryCard from '../components/storyCard'
-import logo from '../images/logo.png'
+// import logo from '../images/logo.png'
+import logo from '../images/logo_new.png'
 import { borders } from '@material-ui/system';
 import useFetch from '../components/useFetch';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,13 +32,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Create() {
+export default function MainStory(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
 
-    const { data: stories, isLoading, error } = useFetch('http://localhost:8000/story')
+    const { data: storiesOld, isLoading, error } = useFetch('http://localhost:8000/story')
 
+    const stories = props.stories
     const maxSteps = stories.length;
 
     const handleNext = () => {

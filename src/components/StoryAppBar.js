@@ -27,7 +27,7 @@ export default function StoryAppBar() {
     const history = useHistory();
 
     const handleBackClick = (e) => {
-        history.push('/story');
+        history.push('/');
     }
 
     return (

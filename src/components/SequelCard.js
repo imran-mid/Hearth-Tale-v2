@@ -6,8 +6,8 @@ import { deepOrange } from '@material-ui/core/colors';
 const UseStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        overflow: 'hidden',
-        padding: theme.spacing(0, 3),
+        overflow: 'scroll',
+        // padding: theme.spacing(0, 3),
     },
     paper: {
         maxWidth: 400,
@@ -34,28 +34,31 @@ export default function SequelCard({ sequel }) {
     const classes = UseStyles();
 
     return (
-        <Accordion >
+        <Accordion className={classes.root} >
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
-            // id={sequel.id}
             >
-                <Grid container>
+                <Grid container
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={3}>
                     <Grid item >
-                        <Avatar alt="Remy Sharp" className={classes.avatar}>
+                        <Avatar alt="User" className={classes.avatar}>
                             {sequel.author.substring(0, 1)}
                         </Avatar>
                     </Grid>
-                </Grid>
-                <Grid container wrap="nowrap" spacing={1} direction='column'>
-                    {/* <Grid item xs zeroMinWidth> */}
-                    <Typography noWrap variant='body1'>{sequel.content.substring(0, 30)}...</Typography>
-                    <Typography gutterBottom variant="body2">
-                        By:
-                        <Chip label={sequel.author} size="small" className={classes.chip} />
-                    </Typography>
-                    {/* </Grid> */}
+                    <Grid item>
+                        {/* <Grid item xs zeroMinWidth> */}
+                        <Typography noWrap variant='body1'>{sequel.content.substring(0, 30)}...</Typography>
+                        <Typography gutterBottom variant="body2">
+                            By:
+                            <Chip label={sequel.author} size="small" className={classes.chip} />
+                        </Typography>
+                        {/* </Grid> */}
 
+                    </Grid>
                 </Grid>
             </AccordionSummary>
             <AccordionDetails>

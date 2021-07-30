@@ -41,6 +41,18 @@
       "content": "ho",
       "genre": "thriller",
       "id": 7
+    },
+    {
+      "title": "Hello Kitty",
+      "content": "Meow meow",
+      "genre": "thriller",
+      "id": 8
+    },
+    {
+      "title": "Thomas The Tank Engine",
+      "content": "What an ugly train...who thought of this idea?!",
+      "genre": "thriller",
+      "id": 9
     }
   ],
   "sequels": [
@@ -73,6 +85,11 @@
       "content": "Pizza! I love pizza",
       "author": "Maggie Smith",
       "id": 6
+    },
+    {
+      "content": "The talking train stopped laughing",
+      "author": "Maggie Smith",
+      "id": 7
     }
   ]
 }

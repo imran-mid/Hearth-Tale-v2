@@ -7,15 +7,18 @@ import SequelCard from '../components/SequelCard';
 import CreateIcon from '@material-ui/icons/Create';
 import AppBar from '../components/StoryAppBar';
 import { makeStyles } from '@material-ui/core/styles';
+import useFetchData from '../components/useFetchData';
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
         // maxWidth: 345,
-        marginBottom: '5px'
+        marginBottom: '5px',
+        maxHeight: '65vh',
+        overflow: 'scroll'
     },
     media: {
-        height: 140,
+        height: 100,
     },
     chip: {
         color: 'orange',
@@ -25,33 +28,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StoryAndSequels() {
     const location = useLocation();
-    const { data: sequels, isLoading, error } = useFetch('http://localhost:8000/sequels')
-    // let sequelsForStory = sequels.filter(function (e) {
-    // return e.storyId == story.id;
-    // });
-
     const { storyId } = useParams()
     const story = location.state.story
     const classes = useStyles();
     const history = useHistory();
+    const { data: sequels, isLoading, error } = useFetchData("sequels", storyId)
 
     const handleWriteSequelClick = (e) => {
+        console.log("doc id", storyId);
         history.push({
             pathname: '/',
             // search: '2',
-            state: { createSequel: true, storyTitle: story.title, storyId: story.id }
+            state: { createSequel: true, storyTitle: story.title, storyId: storyId }
         });
+        // const { data: sequels, isLoading, error } = fetchData('http://localhost:8000/sequels', location.state.firebase, location.state.firestoreDb)
     }
 
     return (
         <div style={{ minWidth: '100%' }}>
             <AppBar />
             <Card className={classes.root} >
-                <CardActionArea style={{ paddingBottom: 5, paddingTop: 5 }}>
+                <CardActionArea style={{ paddingBottom: 5 }}>
                     <CardMedia
                         className={classes.media}
                         alt={story.title}
-                        image="https://source.unsplash.com/random"
+                        image={story.photoUrl ? story.photoUrl : "https://source.unsplash.com/random/"}
                         title="Contemplative Reptile"
                     />
                     <CardContent style={{ paddingBottom: 5, paddingTop: 5 }}>
@@ -79,7 +80,7 @@ export default function StoryAndSequels() {
                     </Button>
                 </CardActions>
             </Card>
-            <Container style={{ height: '30vh', overflow: 'scroll' }}>
+            <Container style={{ marginBottom: '65px', overflow: 'scroll', }}> {/** use height of 30vh */}
                 {isLoading &&
                     <Container>
                         <Typography variant='h6'>
@@ -89,7 +90,7 @@ export default function StoryAndSequels() {
                 {error && <div> Error- {error}</div>}
                 {sequels.map(sequel => (
                     // <Typography key={sequel.id}>haha</Typography>
-                    <SequelCard key={sequel.id} sequel={sequel} />
+                    <SequelCard key={sequel.id} sequel={sequel.data} />
 
                 ))}
             </Container>
