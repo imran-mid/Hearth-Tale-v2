@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { makeStyles, Button, Container, Typography, Radio, Paper, useTheme } from '@material-ui/core'
+import { makeStyles, Button, Container, Typography, Radio, Paper, useTheme, Grid } from '@material-ui/core'
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded'
 import { TextField } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -30,18 +30,27 @@ export default function Create() {
   const [content, setContent] = useState('')
   const [titleError, setTitleError] = useState(false)
   const [contentError, setContentError] = useState(false)
-  const [genre, setGenre] = useState('thriller')
+  const [genre, setGenre] = useState('')
+  const [tag, setTag] = useState('new')
+  const [genreError, setGenreError] = useState(false)
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
     setTitleError(false)
     setContentError(false)
+    setGenreError(false)
 
     console.log(location.state)
+    /**
+     * If there is a story Id, then we are adding a sequel. 
+     */
     if (location.state != null) {
       const storyId = location.state.storyId
       const author = "Maggie Smith"
+
       if (content == '') {
         setContentError(true)
       }
@@ -60,7 +69,10 @@ export default function Create() {
       if (content == '') {
         setContentError(true)
       }
-      if (title && content) {
+      if (genre == '') {
+        setGenreError(true);
+      }
+      if (title && content && genre) {
         fetch('http://localhost:8000/story', {
           method: 'POST',
           headers: { "Content-type": "application/json" },
@@ -92,6 +104,33 @@ export default function Create() {
             required
             error={titleError}
           />
+        }
+        {!location.state &&
+          <Grid container spacing={1} direction="row" justifyContent="space-around" alignItems="center">
+            <Grid item xs={6}>
+              <TextField
+                onChange={(e) => setTitle(e.target.value)}
+                className={classes.field}
+                label="Genre"
+                size="small"
+                required
+                error={genreError}
+                margin="dense"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                onChange={(e) => setTitle(e.target.value)}
+                className={classes.field}
+                label="Tags"
+                size="small"
+                defaultValue={tag}
+                margin="dense"
+                variant="outlined"
+              />
+            </Grid>
+          </Grid>
         }
         <TextField
           onChange={(e) => setContent(e.target.value)}
