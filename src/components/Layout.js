@@ -33,7 +33,7 @@ export default function Layout({ children }) {
     };
 
     return (
-        <div className={classes.topLevelContainer}>
+        <div>
             <Toolbar className={classes.navBar}>
                 <BottomNavigation
                     value={value}
