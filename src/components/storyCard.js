@@ -28,20 +28,18 @@ const useStyles = makeStyles((theme) => ({
 export default function StoryCard({ story }) {
     const classes = useStyles();
     const history = useHistory();
-    // const history = sessionStorage();
 
     var storyId = story.id;
     story = story.data;
     const handleClick = (e) => {
         let url = `/sequels/${storyId}`;
-        //history.push(`/sequels/${story.id}`, [story]);
         history.push({
             pathname: url,
             // search: '2',
             state: { story: story }
         })
     }
-
+    let tags = Array.from(story.tags);
     return (
         <Card className={classes.root} onClick={handleClick} >
             <CardHeader
@@ -57,11 +55,11 @@ export default function StoryCard({ story }) {
                         color="initial">
                         {story.title}
                     </Typography>}
-            // subheader="September 14, 2016"
+                subheader={story.author}
             />
             <CardMedia
                 component="img"
-                alt="Contemplative Reptile"
+                alt="Random Photo"
                 height="160"
                 image={story.photoUrl ? story.photoUrl : "https://source.unsplash.com/random/"}
                 title="Random Photo"
@@ -69,13 +67,13 @@ export default function StoryCard({ story }) {
             <CardContent>
                 <Typography color="textSecondary" gutterBottom >
                     Genre:
-                    {<Chip label={story.genre} className={classes.chip} size="small" style={{ background: 'linear-gradient(0deg, rgba(243,137,42,1) 0%, rgba(207,84,91,1) 100%)' }} />}
+                    {<Chip label={story.genre} className={classes.chip} size="small" />}
                 </Typography>
                 <Typography color="textSecondary" gutterBottom >
                     Tags:
-                    {<Chip label="Time Travel" className={classes.chip} size="small" />}
-                    {<Chip label="Adventure" className={classes.chip} size="small" />}
-
+                    {tags.map(tag => (
+                        <Chip key={tag.id} label={tag} className={classes.chip} size="small" />
+                    ))}
                 </Typography>
                 <Typography
                     variant="body2"

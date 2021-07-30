@@ -35,14 +35,14 @@ export default function StoryAndSequels() {
     const { data: sequels, isLoading, error } = useFetchData("sequels", storyId)
 
     const handleWriteSequelClick = (e) => {
-        console.log("doc id", storyId);
         history.push({
-            pathname: '/',
+            pathname: '/create',
             // search: '2',
             state: { createSequel: true, storyTitle: story.title, storyId: storyId }
         });
-        // const { data: sequels, isLoading, error } = fetchData('http://localhost:8000/sequels', location.state.firebase, location.state.firestoreDb)
     }
+
+    let tags = Array.from(story.tags);
 
     return (
         <div style={{ minWidth: '100%' }}>
@@ -61,12 +61,13 @@ export default function StoryAndSequels() {
                         </Typography>
                         <Typography color="textSecondary"  >
                             Genre:
-                            {<Chip label={story.genre} className={classes.chip} size="small" style={{ background: 'linear-gradient(0deg, rgba(243,137,42,1) 0%, rgba(207,84,91,1) 100%)' }} />}
+                            {<Chip label={story.genre} className={classes.chip} size="small" />}
                         </Typography>
                         <Typography color="textSecondary"  >
                             Tags:
-                            {<Chip label="Time Travel" className={classes.chip} size="small" />}
-                            {<Chip label="Adventure" className={classes.chip} size="small" />}
+                            {tags.map(tag => (
+                                <Chip key={tag.id} label={tag} className={classes.chip} size="small" />
+                            ))}
 
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
