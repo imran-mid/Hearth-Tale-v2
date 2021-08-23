@@ -29,7 +29,7 @@ const useFetchData = (url, storyId) => {
                 if (!firebase) return;
                 let dataRef = null;
                 if (url == "sequels") {
-                    dataRef = firestoreDb.collection(url).where("storyId", "==", storyId).orderBy('createdAt', 'desc').limit(10);
+                    dataRef = firestoreDb.collection(url).where("storyId", "==", storyId).orderBy('createdAt', 'asc').limit(10);
                 } else if (url == "stories") {
                     dataRef = firestoreDb.collection("stories").orderBy('createdAt', 'desc').limit(20);
                 }

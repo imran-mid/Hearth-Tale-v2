@@ -6,7 +6,7 @@ import { deepOrange } from '@material-ui/core/colors';
 const UseStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        overflow: 'scroll',
+        // overflow: 'hidden',
         // padding: theme.spacing(0, 3),
     },
     paper: {
@@ -40,14 +40,18 @@ export default function SequelCard({ sequel }) {
                 aria-controls="panel1a-content"
             >
                 <Grid container
-                    direction="row"
+                    direction="column"
                     justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={3}>
-                    <Grid item >
+                    alignItems="stretch"
+                    spacing={1}>
+                    <Grid container direction="row" justifyContent="space-between" alignItems="center">
                         <Avatar alt="User" className={classes.avatar}>
                             {sequel.author.substring(0, 1)}
                         </Avatar>
+                        <Typography variant="subtitle2">
+                            {console.log("Date-> " + sequel.createdAt.toDate())}
+                            {sequel.createdAt.toDate().toDateString()} at {sequel.createdAt.toDate().toLocaleTimeString()}
+                        </Typography>
                     </Grid>
                     <Grid item>
                         {/* <Grid item xs zeroMinWidth> */}
@@ -57,7 +61,6 @@ export default function SequelCard({ sequel }) {
                             <Chip label={sequel.author} size="small" className={classes.chip} />
                         </Typography>
                         {/* </Grid> */}
-
                     </Grid>
                 </Grid>
             </AccordionSummary>
