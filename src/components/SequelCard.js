@@ -49,7 +49,6 @@ export default function SequelCard({ sequel }) {
                             {sequel.author.substring(0, 1)}
                         </Avatar>
                         <Typography variant="subtitle2">
-                            {console.log("Date-> " + sequel.createdAt.toDate())}
                             {sequel.createdAt.toDate().toDateString()} at {sequel.createdAt.toDate().toLocaleTimeString()}
                         </Typography>
                     </Grid>
