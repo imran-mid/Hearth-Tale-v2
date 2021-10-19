@@ -1,5 +1,3 @@
-### Starter Project for the Material UI playlist
+### Hearth Tale project by Ming Hong-Li and Imran Isa-Dutse
 
-Download the code & run **npm install** to install dependencies before starting the app.
-
-You'll also need to install Material UI as a dependency. To do this run **npm install @material-ui/core**
+Figma Prototype: https://www.figma.com/file/nEnGH8CuoWSkCzJw3QNnpe/HearthTale?node-id=0%3A1
