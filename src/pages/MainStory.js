@@ -9,6 +9,9 @@ import { borders } from '@material-ui/system';
 import useFetch from '../components/useFetch';
 import useFetchData from '../components/useFetchData';
 
+import firebase from "firebase/app";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,9 +36,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function MainStory() {
+    const auth = firebase.auth();
+    const [user] = useAuthState(auth);
     const classes = useStyles();
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [username, setUsername] = useState(null);
+
 
     const { data: stories, isLoading, error } = useFetchData("stories", null)
 
@@ -53,6 +61,24 @@ export default function MainStory() {
         setActiveStep(index);
     }
 
+    React.useEffect(() => {
+        const getUsername = async () => {
+            setUsername(user.displayName ? user.displayName : "anon-user");
+        }
+        getUsername();
+        setLoading(false);
+    }, []);
+
+    const GetUsername = () => {
+        return (
+            <div>
+                {loading ?
+                    <Typography variant="h6">Loading...</Typography> :
+                    <Typography variant="subtitle2">{username}</Typography>}
+            </div>
+        )
+    }
+
     return (
         <Container style={{ background: 'linear-gradient(0deg, rgba(243,137,42,1) 0%, rgba(207,84,91,1) 100%)', height: '100vh' }}>
             <AppBar
@@ -67,6 +93,7 @@ export default function MainStory() {
                 }}
             >
                 <img src={logo} style={{ width: "200px", borderRadius: "0%" }} />
+                <GetUsername />
             </AppBar>
             {isLoading &&
                 <Container>

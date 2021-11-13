@@ -11,6 +11,7 @@ import "firebase/firestore";
 import "firebase/auth";
 
 import { useAuthState } from "react-firebase-hooks/auth";
+import React, { useState } from "react";
 
 const theme = createTheme({
 
@@ -46,8 +47,7 @@ const auth = firebase.auth();
 
 function SignIn() {
   const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
+    auth.signInAnonymously()
   }
   return (
     <Box
@@ -68,19 +68,73 @@ function SignIn() {
         Get Started...
       </Button>
       <Typography variant="h6" style={{ paddingTop: "10px" }} align="center">
-        Hi! Welcome to Hearth Tale. Click the above button to sign in with Google
+        Hi! Welcome to Hearth Tale. Click the above button to start
       </Typography>
     </Box>
   )
 }
+
+function SignInAnon() {
+  auth.signInAnonymously().then(() => {
+    // Signed in..
+  })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage)
+    });
+  return <div />
+}
+
 function App() {
+
   const [user] = useAuthState(auth);
+  const [username, setUsername] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      setIsLoggedIn(true);
+    } else {
+      // call sign in func
+      setIsLoggedIn(false);
+    }
+  });
+
+  // Get Random username
+  React.useEffect(() => {
+    const abortControl = new AbortController();
+    const fetchRandomUser = async () => {
+      // Runs after the first render() lifecycle
+      const url = "https://randomuser.me/api/";
+      const response = await fetch(url);
+      await response.json().then((data) => {
+        setUsername(data.results[0].login.username);
+
+        if (user) {
+          // Update the user profile here
+          user.updateProfile({
+            displayName: username,
+          })
+        }
+      });
+
+    }
+
+    fetchRandomUser();
+    return () => abortControl.abort();
+  }, [user]);
+
+  // Note
+  /** passing data between func components: https://stackoverflow.com/questions/58201897/how-to-pass-data-between-functional-components-in-react*/
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {!user ?
-        <SignIn /> :
+      {!isLoggedIn ?
+        <SignInAnon /> :
         <Router>
           <Layout>
             <Switch>
@@ -107,7 +161,6 @@ function App() {
     </ThemeProvider>
   );
 }
-
 
 /***To-do */
 function SignOut() {

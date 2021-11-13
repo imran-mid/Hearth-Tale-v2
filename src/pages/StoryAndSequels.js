@@ -56,7 +56,7 @@ export default function StoryAndSequels() {
                         title="Contemplative Reptile"
                     />
                     <CardContent style={{ paddingBottom: 5, paddingTop: 5 }}>
-                        <Typography variant="h6" component="h2">
+                        <Typography variant="h4" component="h2">
                             {story.title}
                         </Typography>
                         <Typography color="textSecondary"  >
@@ -70,7 +70,7 @@ export default function StoryAndSequels() {
                             ))}
 
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
+                        <Typography variant="body1" color="textPrimary" component="p">
                             {story.content}
                         </Typography>
                     </CardContent>

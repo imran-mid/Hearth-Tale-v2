@@ -59,7 +59,7 @@ export default function Create() {
   const [user] = useAuthState(auth);
   const [submit, setSubmit] = useState(false);
 
-  const author = user ? (user.displayName ? user.displayName : "User") : "User";
+  const author = user ? (user.displayName ? user.displayName : "Anonymous") : "Anon";
 
   const handleSubmit = async (e) => {
     let waitAfterSumbit = 800;
