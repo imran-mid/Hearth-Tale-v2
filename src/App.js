@@ -4,7 +4,7 @@ import Create from './pages/create/CreateStory'
 import { createTheme, ThemeProvider, CssBaseline, Container, Typography, Paper, Button, Grid, Box } from '@material-ui/core'
 import MainStory from './pages/MainStory'
 import StoryAndSequels from './pages/StoryAndSequels'
-import Layout from './components/Layout'
+import BottomNavBar from './components/BottomNavBar'
 
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -15,7 +15,6 @@ import React, { useState } from "react";
 import CreateComic from './pages/create/CreateComic'
 
 const theme = createTheme({
-
   palette: {
     type: "dark",
     primary: { main: '#192124' }, // dark blue grey
@@ -75,6 +74,9 @@ function SignIn() {
   )
 }
 
+/**
+ * Sign in the user using Firebase anonymous authentication
+ */
 function SignInAnon() {
   auth.signInAnonymously().then(() => {
     // Signed in..
@@ -84,14 +86,20 @@ function SignInAnon() {
       var errorMessage = error.message;
       console.log(errorCode, errorMessage)
     });
-  return <div />
+  return (
+    <div>
+      <Typography variant="h6">
+        Loading Application...
+      </Typography>
+    </div>
+  )
 }
 
 function App() {
-
   const [user] = useAuthState(auth);
   const [username, setUsername] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const ref = React.useRef(null);
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -132,12 +140,18 @@ function App() {
   /** passing data between func components: https://stackoverflow.com/questions/58201897/how-to-pass-data-between-functional-components-in-react*/
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {!isLoggedIn ?
-        <SignInAnon /> :
-        <Router>
-          <Layout>
+    !isLoggedIn ? SignInAnon() :
+      <ThemeProvider theme={theme}>
+        <Box
+          ref={ref}
+          sx={{
+            width: {
+              mobile: 100,
+              laptop: 100,
+            },
+          }}>
+          <CssBaseline />
+          <Router>
             <Switch>
               <Route exact path="/">
                 <MainStory />
@@ -159,12 +173,13 @@ function App() {
                 </Container>
               </Route>
             </Switch>
-          </Layout>
-        </Router>
-      }
-    </ThemeProvider>
+            <BottomNavBar />
+          </Router>
+        </Box>
+      </ThemeProvider>
   );
 }
+
 
 /***To-do */
 function SignOut() {

@@ -14,9 +14,12 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        //height: "100%",
-        flexGrow: 1,
+    cardBox: {
+        /**
+         * This is to allow space to view the whole card when in landscape mode.
+         * Else, the bottom is hidden behind the navigation bar
+         */
+        paddingBottom: '15vh',
     },
     cardViewContainer: {
         marginTop: '10%',
@@ -80,7 +83,7 @@ export default function MainStory() {
     }
 
     return (
-        <Container style={{ background: 'linear-gradient(0deg, rgba(243,137,42,1) 0%, rgba(207,84,91,1) 100%)', height: '100vh' }}>
+        <Container style={{ background: 'linear-gradient(0deg, rgba(243,137,42,1) 0%, rgba(207,84,91,1) 100%)', minHeight: '100vh' }}>
             <AppBar
                 position="sticky"
                 style={{
@@ -102,7 +105,7 @@ export default function MainStory() {
                     </Typography>
                 </Container>}
             {error && <div> Error- {error}</div>}
-            <Box borderRadius={30}>
+            <Box borderRadius={30} className={classes.cardBox}>
                 <SwipeableViews enableMouseEvents index={activeStep} onChangeIndex={handleSwipe} className={classes.cardViewContainer}>
                     {stories.map((story, index) =>
                     (
