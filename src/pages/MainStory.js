@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cardViewContainer: {
         marginTop: '10%',
-        borderRadius: '7%'
+        borderRadius: '4%'
     },
     header: {
         backgroundColor: theme.palette.background.default,
@@ -105,7 +105,7 @@ export default function MainStory() {
                     </Typography>
                 </Container>}
             {error && <div> Error- {error}</div>}
-            <Box borderRadius={30} className={classes.cardBox}>
+            <Box className={classes.cardBox}>
                 <SwipeableViews enableMouseEvents index={activeStep} onChangeIndex={handleSwipe} className={classes.cardViewContainer}>
                     {stories.map((story, index) =>
                     (
