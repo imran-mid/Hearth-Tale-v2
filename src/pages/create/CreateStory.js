@@ -11,6 +11,9 @@ import "firebase/auth";
 import 'firebase/firestore';
 import { useAuthState } from "react-firebase-hooks/auth";
 
+/**
+ * Store Firebase config information
+ */
 var firebaseConfig = {
   apiKey: "AIzaSyCXvWalIbI9L4WdG0xmwn-vNFEvJft6IcA",
   authDomain: "hearth-tale-demo-v2.firebaseapp.com",

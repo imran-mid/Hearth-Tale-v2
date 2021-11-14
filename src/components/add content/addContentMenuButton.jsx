@@ -12,6 +12,7 @@ import MenuList from "@material-ui/core/MenuList";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { AddOutlined } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,8 +105,20 @@ export default function AddContentMenuButton() {
                   id="menu-list-grow"
                   onKeyDown={handleListKeyDown}
                 >
-                  <MenuItem onClick={handleClose}>Add Story</MenuItem>
-                  <MenuItem onClick={handleClose}>Add Comic</MenuItem>
+                  <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    to="/create/story"
+                  >
+                    Add Story
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    to="/create/comic"
+                  >
+                    Add Comic
+                  </MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 // import "./App.css";
-import Create from './pages/Create'
+import Create from './pages/create/CreateStory'
 import { createTheme, ThemeProvider, CssBaseline, Container, Typography, Paper, Button, Grid, Box } from '@material-ui/core'
 import MainStory from './pages/MainStory'
 import StoryAndSequels from './pages/StoryAndSequels'
@@ -12,6 +12,7 @@ import "firebase/auth";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import React, { useState } from "react";
+import CreateComic from './pages/create/CreateComic'
 
 const theme = createTheme({
 
@@ -138,11 +139,14 @@ function App() {
         <Router>
           <Layout>
             <Switch>
-              <Route exact path="/create">
-                <Create />
-              </Route>
               <Route exact path="/">
                 <MainStory />
+              </Route>
+              <Route exact path="/create/story">
+                <Create />
+              </Route>
+              <Route exact path="/create/comic">
+                <CreateComic />
               </Route>
               <Route path="/sequels/:storyId">
                 <StoryAndSequels />
