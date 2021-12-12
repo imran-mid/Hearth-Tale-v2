@@ -13,6 +13,7 @@ import "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import React, { useState } from "react";
 import CreateComic from './pages/create/CreateComic'
+import HomePage from './pages/HomePage/HomePage'
 
 const theme = createTheme({
   palette: {
@@ -155,6 +156,9 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <MainStory />
+              </Route>
+              <Route exact path="/test">
+                <HomePage />
               </Route>
               <Route exact path="/create/story">
                 <Create />
